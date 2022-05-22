@@ -10,7 +10,18 @@ class CategoryService {
             params: params,
         });
     }
-
+    save(body){
+        return axios.post(URL_CATEGORIES + "/create",body)
+    }
+    detail(id){
+        return axios.get(URL_CATEGORIES + "/detail/"+ id)
+    }
+    edit(id, body){
+        return axios.put(URL_CATEGORIES + "/update/"+id,body)
+    }
+    delete(id){
+        return axios.delete(URL_CATEGORIES + "/delete/" + id)
+    }
 
 }
 

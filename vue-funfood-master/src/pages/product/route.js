@@ -6,7 +6,7 @@ const routes = [
         name: 'products',
         meta: {
             title: 'Products',
-            icon: 'menu-fold'
+            icon: 'bars'
         },
         children: [
             {
@@ -14,6 +14,7 @@ const routes = [
                 component: () => import('./List'),
                 name: 'productList',
                 meta: {
+
                     title: 'Products List',
                 }
             },
@@ -30,7 +31,8 @@ const routes = [
                 component:()=> import('./Detail'),
                 name:'detailProduct',
                 meta: {
-                    title: 'Detail Product'
+                    title: 'Detail Product',
+                    hidden: 'true'
                 }
             },
             {
@@ -38,7 +40,8 @@ const routes = [
                 component:()=> import('./edit'),
                 name:'editProduct',
                 meta: {
-                    title: 'Edit Product'
+                    title: 'Edit Product',
+                    hidden:'true'
                 }
             },
         ]

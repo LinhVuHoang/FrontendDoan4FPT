@@ -13,8 +13,8 @@
           <a-sub-menu :key="menu.name" v-else >
             <span slot="title"><a-icon :type="menu.meta.icon" /><span>{{ menu.meta.title }}</span></span>
             <template v-for="child in menu.children">
-              <a-menu-item :key="child.name" v-if="!child.meta || !child.meta.hidden">
-                <router-link :to="{name: child.name}">
+              <a-menu-item :key="child.name" v-if="!child.meta.hidden">
+                <router-link :to="{name: child.name}" style="text-decoration: none" >
                   {{ child.meta.title }}
                 </router-link>
               </a-menu-item>

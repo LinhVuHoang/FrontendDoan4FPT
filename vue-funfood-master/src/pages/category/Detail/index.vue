@@ -5,7 +5,7 @@
   <section class="product" style="display: grid">
     <div class="ant-col-sm-18" id="main_product" >
       <div class="photo-container">
-          <img class="photo-main" :src="currentData.thumbnail" alt="green apple slice">
+        <img class="photo-main" :src="currentData.thumbnail" alt="green apple slice">
       </div>
     </div>
     <div class="ant-col-sm-18" id="main_product">
@@ -13,22 +13,9 @@
         <h1>{{ currentData.name}}</h1>
         <span>Stauts: {{currentData.status}}</span>
       </div>
-      <div class="price">
-         <span>{{currentData.price}} VNĐ</span>
-      </div>
-
-      <div class="description">
-        <h3>Description</h3>
-        <span>{{currentData.description}}</span>
-
-      </div>
-      <div class="description">
-        <h4>Detail</h4>
-        <span v-html="currentData.detail"></span>
-      </div>
       <div slot="action">
-        <router-link :to="'/products/edit/'+currentData.id">
-        <button class="buy--btn">Update Product</button>
+        <router-link :to="'/categories/edit/'+currentData.id">
+          <button class="buy--btn">Update Product</button>
         </router-link>
       </div>
     </div>
@@ -45,27 +32,20 @@ export default {
       currentData:{
         id:null,
         name: undefined,
-        price: undefined,
         thumbnail: undefined,
-        categoryId: undefined,
-        quantity: undefined,
-        detail: undefined,
-        description: undefined,
         status: 'ACTIVE'
       },
     };
   },
   created() {
-    this.getCategorise()
-    this.getProducts(this.$route.params.id)
+    this.getCategorise(this.$route.params.id)
   },
   methods: {
-    getCategorise() {
-      CategoryService.getAll().then(
-          res => {
-            this.data = res.data
-          }
-      )
+    getCategorise(id) {
+      CategoryService.detail(id).then(response =>{
+        this.currentData =response.data;
+        console.log(response.data);
+      })
     },
     getProducts(id){
       ProductService.detail(id).then(response =>{
@@ -142,7 +122,7 @@ img {
 }
 #main_product{
 
- /* grid-template-columns: repeat(auto-fit,minmax(200px,1fr));*/
+  /* grid-template-columns: repeat(auto-fit,minmax(200px,1fr));*/
 }
 .photo-main {
   padding-bottom: 2.5em;
@@ -156,20 +136,20 @@ img {
   filter: saturate(100%) contrast(100%) hue-rotate(10deg)
   drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
 
-.controls {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.8em;
-  color: #fff;
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8em;
+    color: #fff;
 
-i {
-  cursor: pointer;
-}
-}
+    i {
+      cursor: pointer;
+    }
+  }
 
-img {
+  img {
 
-}
+  }
 }
 
 .photo-album {
@@ -177,19 +157,19 @@ img {
   border-radius: 0 0 6px 6px;
   background-color: #fff;
 
-ul {
-  display: flex;
-  justify-content: space-around;
-}
+  ul {
+    display: flex;
+    justify-content: space-around;
+  }
 
-li {
-  float: left;
-  width: 55px;
-  height: 55px;
-  padding: 7px;
-  border: 1px solid $color-secondary;
-  border-radius: 3px;
-}
+  li {
+    float: left;
+    width: 55px;
+    height: 55px;
+    padding: 7px;
+    border: 1px solid $color-secondary;
+    border-radius: 3px;
+  }
 }
 
 /* ----- Informations Section ----- */
@@ -198,17 +178,17 @@ li {
   padding: 2.8em 0;
 }
 .title {
-h1 {
-  margin-bottom: 0.1em;
-  color: $color-primary;
-  font-size: 1.5em;
-  font-weight: 900;
-}
+  h1 {
+    margin-bottom: 0.1em;
+    color: $color-primary;
+    font-size: 1.5em;
+    font-weight: 900;
+  }
 
-span {
-  font-size: 0.7em;
-  color: $color-secondary;
-}
+  span {
+    font-size: 0.7em;
+    color: $color-secondary;
+  }
 }
 
 .price {
@@ -216,57 +196,57 @@ span {
   color: $color-highlight;
   font-size: 1.2em;
 
-span {
-  padding-left: 0.15em;
-  font-size: 2.9em;
-}
+  span {
+    padding-left: 0.15em;
+    font-size: 2.9em;
+  }
 }
 
 .variant {
   overflow: auto;
 
-h3 {
-  margin-bottom: 1.1em;
-}
+  h3 {
+    margin-bottom: 1.1em;
+  }
 
-li {
-  float: left;
-  width: 35px;
-  height: 35px;
-  padding: 3px;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  cursor: pointer;
+  li {
+    float: left;
+    width: 35px;
+    height: 35px;
+    padding: 3px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
 
-&:first-child,
-&:hover {
-   border: 1px solid $color-secondary;
- }
-}
+    &:first-child,
+    &:hover {
+      border: 1px solid $color-secondary;
+    }
+  }
 
-li:not(:first-child) {
-  margin-left: 0.1em;
-}
+  li:not(:first-child) {
+    margin-left: 0.1em;
+  }
 }
 
 .description {
   clear: left;
   margin: 2em 0;
 
-h3 {
-  margin-bottom: 1em;
-}
+  h3 {
+    margin-bottom: 1em;
+  }
 
-ul {
-  font-size: 0.8em;
-  list-style: disc;
-  margin-left: 1em;
-}
+  ul {
+    font-size: 0.8em;
+    list-style: disc;
+    margin-left: 1em;
+  }
 
-li {
-  text-indent: -0.6em;
-  margin-bottom: 0.5em;
-}
+  li {
+    text-indent: -0.6em;
+    margin-bottom: 0.5em;
+  }
 }
 
 .buy--btn {
@@ -281,9 +261,9 @@ li {
   box-shadow: 2px 2px 25px -7px $color-primary;
   cursor: pointer;
 
-&:active {
-   transform: scale(0.97);
- }
+  &:active {
+    transform: scale(0.97);
+  }
 }
 
 /* ----- Footer Section ----- */
@@ -292,13 +272,13 @@ footer {
   text-align: center;
   color: #fff;
 
-a {
-  color: $color-primary;
+  a {
+    color: $color-primary;
 
-&:hover {
-   color: $color-highlight;
- }
-}
+    &:hover {
+      color: $color-highlight;
+    }
+  }
 }
 
 </style>

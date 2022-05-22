@@ -101,6 +101,15 @@ export default {
         }
         return flag;
     },
+   validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return !!pattern.test(str);
+},
 
     validate(){
       var errorName = document.getElementById('error-name')
@@ -168,9 +177,17 @@ export default {
         if (this.form.thumbnail == undefined) {
           errorthumbnail.innerText = 'Vui lòng nhập ảnh'
           checkNumber++;
+        }else if(!this.validURL(this.form.thumbnail)){
+          errorthumbnail.innerText = 'Ảnh phải là một đường link'
+          checkNumber++;
+        }else {
+          errorthumbnail.innerText=''
         }
         if (this.form.detail == undefined) {
           errordetail.innerText = 'Vui lòng nhập chi tiết'
+          checkNumber++;
+        }else {
+          errordetail.innerText=''
         }
 
         if (checkNumber == 0) {
