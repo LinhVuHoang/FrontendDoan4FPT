@@ -8,7 +8,7 @@
           <img class="photo-main" :src="currentData.thumbnail" alt="green apple slice">
       </div>
     </div>
-    <div class="ant-col-sm-18" id="main_product">
+    <div class="ant-col-sm-18" >
       <div class="title">
         <h1>{{ currentData.name}}</h1>
         <span>Stauts: {{currentData.status}}</span>

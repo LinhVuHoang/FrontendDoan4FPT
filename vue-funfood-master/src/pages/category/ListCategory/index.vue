@@ -74,6 +74,11 @@ const columns = [
     scopedSlots: {customRender: 'thumbnail'}
   },
   {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_PRODUCTS = "http://localhost:8888/api/v1/products";
+const URL_PRODUCTS = "https://funfruitapp.herokuapp.com/api/v1/products";
 
 class ProductService {
 

@@ -8,6 +8,10 @@
       <a-input v-model="form.thumbnail"/>
       <span id="error-thumbnail" style="color: red"></span>
     </a-form-item>
+    <a-form-item label="Product Name">
+      <a-input v-model="form.description"/>
+      <span id="error-description" style="color: red"></span>
+    </a-form-item>
     <a-form-item label="Status" hidden>
       <a-input v-model="form.status"/>
       <span id="error-status" style="color: red"></span>
@@ -29,6 +33,7 @@ export default {
       form:{
         name: undefined,
         thumbnail: undefined,
+        description:undefined,
         status: 'ACTIVE'
       },
 
@@ -50,7 +55,7 @@ export default {
     validate(){
       var errorName = document.getElementById('error-name')
       var errorthumbnail = document.getElementById('error-thumbnail')
-      var errordetail = document.getElementById('error-detail')
+      var errordescription = document.getElementById('error-description')
       let checkNumber =0;
       if(this.form.name === undefined){
         errorName.innerText = 'Vui lòng nhập tên'
@@ -71,9 +76,19 @@ export default {
       }else {
         errorthumbnail.innerText=''
       }
+      if(this.form.description === undefined){
+        errordescription.innerText = 'Vui lòng nhập tên'
+        checkNumber++;
+      }else if(this.form.description.length<7){
+        errorName.innerText = 'Mô tả phải lớn hơn 7 ký tự'
+        checkNumber++;
+      }else {
+        errordescription.innerText=''
+      }
       if (checkNumber == 0) {
         return true;
-      } else {
+      }
+      else {
         return false;
       }
     },

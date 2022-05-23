@@ -4,7 +4,7 @@
       <div>
         <a-form @submit="handleSearch" class="product__search-form">
           <a-form-item>
-            <a-input-search v-model="params.name" placeholder="Search by name">
+            <a-input-search :v-model="params.name" placeholder="Search by name">
               <a-icon type="search"/>
             </a-input-search>
           </a-form-item>

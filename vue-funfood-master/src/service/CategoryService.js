@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL_CATEGORIES = "http://localhost:8888/api/v1/categories";
+const URL_CATEGORIES = "https://funfruitapp.herokuapp.com/api/v1/categories";
 
 
 class CategoryService {
