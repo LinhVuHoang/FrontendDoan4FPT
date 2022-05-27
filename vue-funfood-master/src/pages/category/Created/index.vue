@@ -8,7 +8,7 @@
       <a-input v-model="form.thumbnail"/>
       <span id="error-thumbnail" style="color: red"></span>
     </a-form-item>
-    <a-form-item label="Product Name">
+    <a-form-item label="Description">
       <a-input v-model="form.description"/>
       <span id="error-description" style="color: red"></span>
     </a-form-item>

@@ -11,10 +11,10 @@
     <div class="ant-col-sm-18" >
       <div class="title">
         <h1>{{ currentData.name}}</h1>
-        <span>Stauts: {{currentData.status}}</span>
+        <span>Status: {{currentData.status}}</span>
       </div>
       <div class="price">
-         <span>{{currentData.price}} VNĐ</span>
+         <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(currentData.price) }}</span>
       </div>
 
       <div class="description">

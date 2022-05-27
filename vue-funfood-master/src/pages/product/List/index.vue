@@ -4,7 +4,7 @@
       <div>
         <a-form @submit="handleSearch" class="product__search-form">
           <a-form-item>
-            <a-input-search :v-model="params.name" placeholder="Search by name">
+            <a-input-search v-model="params.name" placeholder="Search by name">
               <a-icon type="search"/>
             </a-input-search>
           </a-form-item>
@@ -66,6 +66,9 @@
          <span slot="category" slot-scope="text">
            {{ text.name }}
         </span>
+        <span slot="price" slot-scope="text">
+          {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)}}
+        </span>
         <span slot="thumbnail" slot-scope="text">
              <img :src="text" style="width: 70%">
          </span>
@@ -98,8 +101,6 @@
 <script>
 import ProductService from "@/service/ProductService";
 import CategoryService from "@/service/CategoryService";
-
-
 const columns = [
   {
     title: 'ID',
@@ -122,13 +123,14 @@ const columns = [
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
+    ellipsis: true,
+    scopedSlots: {customRender: 'price'}
   },
   {
     title: 'Category',
     dataIndex: 'category',
     key: 'category',
     scopedSlots: {customRender: 'category'},
-
   },
   {
     title: 'Status',
@@ -150,10 +152,7 @@ const columns = [
     ellipsis: true,
     scopedSlots: {customRender: 'action'},
   },
-
-
 ];
-
 export default {
   data() {
     return {
@@ -172,7 +171,7 @@ export default {
       params: {
         pageSize: 10,
         page: 1,
-        name: undefined,
+        name: "",
         categoryId: undefined,
         minPrice: undefined,
         maxPrice: undefined,
@@ -185,12 +184,15 @@ export default {
     this.getCategorise()
   },
   methods: {
-    getProducts() {
-      ProductService.getAll(this.params).then(
+    async   getProducts() {
+     await ProductService.getAll(this.params).then(
           rs => {
-            // console.log(rs.data.data)
+          try {
             this.data = rs.data.data;
-            this.totalRecords = rs.data.pagination.totalItems
+            this.totalRecords = rs.data.pagination?.totalItems;
+          }catch (e){
+            console.log(e);
+          }
           }
       )
     },
@@ -237,19 +239,21 @@ export default {
         categoryId: undefined,
         maxPrice: undefined,
         minPrice: undefined,
-        name: undefined,
+        name: "",
         page: undefined,
       }
-    }
+      this.getProducts();
+    },
+    uppercase1(value) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
   }
 };
 </script>
 <style scoped>
 .product__search-form{
-
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
 }
-
 </style>

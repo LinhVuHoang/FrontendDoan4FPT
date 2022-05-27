@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const URL_PRODUCTS = "https://funfruitapp.herokuapp.com/api/v1/products";
+const URL_PRODUCTS = "https://sem4-fruitapp.herokuapp.com/api/v1/products";
 
 class ProductService {
 
     getAll(params){
-        return axios.get(URL_PRODUCTS + "/list",{
+        return axios.get(URL_PRODUCTS + "/list", {
             params: params,
         });
     }
