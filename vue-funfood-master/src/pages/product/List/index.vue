@@ -130,6 +130,7 @@ const columns = [
     title: 'Category',
     dataIndex: 'category',
     key: 'category',
+    ellipsis: true,
     scopedSlots: {customRender: 'category'},
   },
   {
@@ -190,6 +191,7 @@ export default {
           try {
             this.data = rs.data.data;
             this.totalRecords = rs.data.pagination?.totalItems;
+            console.log(this.data)
           }catch (e){
             console.log(e);
           }
@@ -237,10 +239,11 @@ export default {
     resetButton(){
       this.params = {
         categoryId: undefined,
+        pageSize: 10,
+        page:1,
         maxPrice: undefined,
         minPrice: undefined,
         name: "",
-        page: undefined,
       }
       this.getProducts();
     },

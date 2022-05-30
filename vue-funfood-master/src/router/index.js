@@ -2,14 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {productsRoute} from "@/pages/product";
 import {categoriesRoute} from "@/pages/category";
-
+import {ordersRouter} from "../pages/order";
 
 
 Vue.use(VueRouter)
 
 const routes = [
     ...productsRoute,
-    ...categoriesRoute
+    ...categoriesRoute,
+    ...ordersRouter
 
 
 

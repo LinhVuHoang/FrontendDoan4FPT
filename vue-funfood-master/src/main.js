@@ -18,6 +18,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import {faAccessibleIcon} from "@fortawesome/free-brands-svg-icons";
 import {faAngry} from '@fortawesome/free-regular-svg-icons'
+import './css/style.css'
 library.add(faTwitter, faUserSecret,faAngry,faAccessibleIcon)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

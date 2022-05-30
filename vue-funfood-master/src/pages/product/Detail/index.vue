@@ -13,6 +13,9 @@
         <h1>{{ currentData.name}}</h1>
         <span>Status: {{currentData.status}}</span>
       </div>
+      <div class="category" :v-model="this.getCategorise(currentData.categoryId)">
+        <span>Loại mùa: {{this.data.name}} </span>
+      </div>
       <div class="price">
          <span>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(currentData.price) }}</span>
       </div>
@@ -56,14 +59,15 @@ export default {
     };
   },
   created() {
-    this.getCategorise()
+    this.getCategorise(this.currentData.categoryId)
     this.getProducts(this.$route.params.id)
   },
   methods: {
-    getCategorise() {
-      CategoryService.getAll().then(
+    getCategorise(id) {
+      CategoryService.detail(id).then(
           res => {
             this.data = res.data
+            console.log(this.data)
           }
       )
     },
