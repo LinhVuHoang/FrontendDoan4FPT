@@ -220,6 +220,9 @@ export default {
         title: 'Do you want delete this product',
         onOk: () => {
           this.deleteProduct(pId)
+         this.onShowSizeChange()
+          this.getProducts();
+         /* this.onShowSizeChange()*/
         },
         onCancel() {
           console.log("Cancel")

@@ -19,15 +19,24 @@
           </a-form-item>
 
         </a-form>
-        <a-button type="primary" html-type="submit" @click="handleSearch">
+        <a-button  type="primary" html-type="submit" @click="handleSearch">
           Search
         </a-button>
         <a-button type="primary" html-type="submit" @click="resetButton" style="margin-left: 20px">
           Reset
         </a-button>
       </div>
-      <div class="price"> <span style="align-content: center">TotalPrice: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}</span></div>
-      <div class="price"> <span style="align-content: center">Sales Money: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span></div>
+      <div>
+      <div id="price"  style="float: left" class="col-md-5">
+       <span style="align-content: center">TotalPrice: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}<br></span>
+      <span style="align-content: center">SalesMoney: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span>
+      </div>
+      <div id="price1" class="col-md-5" style="float: right">
+        <span style="align-content: center">TotalPrice Page: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price2)}}<br></span>
+        <span style="align-content: center">SalesMoney Page: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price3)}}</span>
+      </div>
+      </div>
+
       <a-table :columns="columns" :pagination="false" rowKey="id" :data-source="data">
         <span slot="name" slot-scope="text">
           {{text.name}}
@@ -103,14 +112,12 @@ const columns = [
   {
     title: 'Name',
     dataIndex: 'account',
-    key: 'accountName',
     ellipsis: true,
     scopedSlots: {customRender: 'name'},
   },
   {
     title: 'Phone',
     dataIndex: 'account',
-    key: 'phoneAccount',
     ellipsis: true,
     scopedSlots: {customRender: 'phone'},
   },
@@ -159,6 +166,8 @@ export default {
       },
       price:undefined,
       price1:undefined,
+      price2:undefined,
+      price3:undefined,
       columns,
       body:{
         id: undefined,
@@ -197,10 +206,25 @@ export default {
     async  getOrder(){
       await OrderService.getAll(this.params).then(
           rs => {
+
             try {
+              let price2 =0;
+              let price3=0;
               this.data = rs.data.data;
               console.log(this.data)
               this.totalRecords = rs.data.pagination.totalItems;
+              for (let i = 0; i < this.data.length; i++) {
+                if(this.data[i].status ==1) {
+                  price2 = price2 + this.data[i].totalPrice;
+                }
+              }
+              this.price2 = price2;
+              for (let i = 0; i < this.data.length; i++) {
+                if(this.data[i].checkout ==true) {
+                  price3 = price3 + this.data[i].totalPrice;
+                }
+              }
+              this.price3 = price3
               console.log(this.totalRecords)
               console.log(rs.data.data)
             }catch (e){
@@ -334,15 +358,25 @@ export default {
 $color-primary: #4c4c4c;
 $color-secondary: #a6a6a6;
 $color-highlight: #ff3f40;
-.price {
+#price {
   margin: 1.5em 0;
-  color: $color-highlight;
+  color: $color-primary;
   font-size: 1.2em;
 
 span {
   padding-left: 0.15em;
-  font-size: 2.9em;
+  font-size: 2.2em;
 }
+}
+#price1 {
+  margin: 1.5em 0;
+  color: $color-highlight;
+  font-size: 1.2em;
+
+  span {
+    padding-left: 0.15em;
+    font-size: 2.2em;
+  }
 }
 .product__search-form{
   display: grid;
