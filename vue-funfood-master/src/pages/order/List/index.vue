@@ -4,20 +4,35 @@
       <div>
         <a-form @submit="handleSearch" class="product__search-form">
           <a-form-item>
-            <a-input-search v-model="params.id" class="ant-col-md-7" placeholder="Search by ID">
+            <a-input-search v-model="params.id" placeholder="Search by ID">
               <a-icon type="search"/>
             </a-input-search>
-            <a-input-search v-model="params.accountName" class="ant-col-md-7"  style="margin-left: 2%" placeholder="Search by name">
+          </a-form-item>
+            <a-form-item>
+            <a-input-search v-model="params.accountName"  placeholder="Search by name">
               <a-icon type="search"/>
             </a-input-search>
-            <a-input-search v-model="params.phoneAccount" class="ant-col-md-7" style="margin-left: 2%" placeholder="Search by phone">
+            </a-form-item>
+            <a-form-item>
+            <a-input-search v-model="params.phoneAccount" placeholder="Search by phone">
               <a-icon type="search"/>
             </a-input-search>
+            </a-form-item>
+            <a-form-item>
             <a-range-picker
                             :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
                             @change="selectDate"/>
           </a-form-item>
-
+          <a-form-item>
+          <a-select placeholder="Search by Status" v-model="params.status">
+            <a-select-option  :value="1">
+              Đã xử lý
+            </a-select-option>
+            <a-select-option :value="0" >
+              Đang xử lý
+            </a-select-option>
+          </a-select>
+          </a-form-item>
         </a-form>
         <a-button  type="primary" html-type="submit" @click="handleSearch">
           Search
@@ -26,14 +41,16 @@
           Reset
         </a-button>
       </div>
+      <a-button v-if="this.params.status ==1" type="primary" html-type="submit" @click="updateallstatus(this.data,0)" style="margin-top: 20px">
+        SelectAll
+      </a-button>
+      <a-button v-else-if="this.params.status ==0" type="primary" html-type="submit" @click="updateallstatus(this.data,1)" style="margin-top: 20px">
+        SelectAll
+      </a-button>
       <div>
       <div id="price"  style="float: left" class="col-md-5">
-       <span style="align-content: center">TotalPrice: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}<br></span>
-      <span style="align-content: center">SalesMoney: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span>
-      </div>
-      <div id="price1" class="col-md-5" style="float: right">
-        <span style="align-content: center">TotalPrice Page: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price2)}}<br></span>
-        <span style="align-content: center">SalesMoney Page: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price3)}}</span>
+       <span style="align-content: center">Tổng tiền đơn hàng: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}<br></span>
+      <span style="align-content: center">Số tiền đã nhận: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span>
       </div>
       </div>
 
@@ -56,12 +73,12 @@
              Đang xử lý
           </span>
           <span v-if="text ==1">
-          <input  type="checkbox" id="checkbox" checked="checked"  @change="updatestatus(record.id,0)"/>
-          <label style="text-align: center" for="checkbox"></label>
+          <input  type="checkbox"  checked="checked"  @change="updatestatus(record.id,0)"/>
+          <label style="text-align: center" ></label>
             </span>
           <span v-else>
-            <input type="checkbox" id="checkbox" @change="updatestatus(record.id,1)"/>
-          <label style="text-align: center" for="checkbox"></label>
+            <input type="checkbox"  @change="updatestatus(record.id,1)"/>
+          <label style="text-align: center" ></label>
           </span>
         </span>
           <span slot="checkout" slot-scope="text,record">
@@ -72,12 +89,12 @@
               Đã thanh toán
             </span>
             <span v-if="text ==true">
-          <input  type="checkbox" id="checkbox" checked="checked"  @change="updatecheckout(record.id,false)"/>
-          <label style="text-align: center" for="checkbox"></label>
+          <input  type="checkbox"  checked="checked"  @change="updatecheckout(record.id,false)"/>
+          <label style="text-align: center" ></label>
             </span>
           <span v-else>
-            <input type="checkbox" id="checkbox" @change="updatecheckout(record.id,true)"/>
-          <label style="text-align: center" for="checkbox"></label>
+            <input type="checkbox"  @change="updatecheckout(record.id,true)"/>
+          <label style="text-align: center" ></label>
           </span>
           </span>
         <div slot="action" slot-scope="text,record">
@@ -95,7 +112,12 @@
             @change="onChange"
         />
       </div>
-
+  <div>
+    <div id="price1" class="col-md-6" style="float: right">
+      <span  style="align-content: center">Tổng tiền đơn hàng trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price2)}}<br></span>
+      <span  style="align-content: center">Số tiền đã nhận trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price3)}}</span>
+    </div>
+  </div>
     </a-card>
   </div>
 </template>
@@ -179,6 +201,7 @@ export default {
         page: 1,
         from: "",
         to: "",
+        status:undefined,
         accountName:undefined,
         phoneAccount:undefined,
         id:undefined
@@ -201,6 +224,7 @@ export default {
     this.caculatorCheckout()
     this.updatecheckout()
     this.updatestatus()
+    this.updateallstatus()
   },
   methods:{
     async  getOrder(){
@@ -215,6 +239,7 @@ export default {
               this.totalRecords = rs.data.pagination.totalItems;
               for (let i = 0; i < this.data.length; i++) {
                 if(this.data[i].status ==1) {
+                  console.log(this.data[i].id)
                   price2 = price2 + this.data[i].totalPrice;
                 }
               }
@@ -322,6 +347,17 @@ export default {
           })
 
     },
+    updateallstatus(dataid,status){
+      for(let i=0;i<dataid.length;i++){
+        console.log(dataid[i].id)
+        OrderService.updateStatus(dataid[i].id,status).then(
+            rs=>{
+              console.log(rs.data)
+              this.getOrder();
+              this.caculatorTotalPrice();
+            })
+      }
+    },
 
     updatecheckout(id,isCheck){
         OrderService.updateCheckout(id,isCheck).then(
@@ -365,7 +401,7 @@ $color-highlight: #ff3f40;
 
 span {
   padding-left: 0.15em;
-  font-size: 2.2em;
+  font-size: 1.2em;
 }
 }
 #price1 {
@@ -375,7 +411,7 @@ span {
 
   span {
     padding-left: 0.15em;
-    font-size: 2.2em;
+    font-size: 1.2em;
   }
 }
 .product__search-form{

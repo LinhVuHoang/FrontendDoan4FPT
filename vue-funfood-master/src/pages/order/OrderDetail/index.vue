@@ -9,6 +9,10 @@
             <table class="table" :pagination="false" v-for="te in this.data" v-bind:key="te">
               <thead class="thead-primary">
               <tr>
+                <th>ShipName</th>
+                <th>ShipAddress</th>
+                <th>ShipPhone</th>
+                <th>ShipNote</th>
                 <th>&nbsp;</th>
                 <th>Product</th>
                 <th>Price</th>
@@ -19,6 +23,10 @@
               </thead>
               <tbody>
               <tr class="alert" role="alert" v-for="product in te.orderDetails" v-bind:key="product.productId">
+                <td><span>{{te.shipName}}</span></td>
+                <td><span>{{te.shipAddress}}</span></td>
+                <td><span>{{te.shipPhone}}</span></td><td>
+                <span>{{te.shipNote}}</span></td>
                 <td><span><img class="img" :src="product.thumbnailProduct"/></span></td>
                 <td>
                   <div class="name">
