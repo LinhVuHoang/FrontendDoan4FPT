@@ -1,7 +1,7 @@
 import Applayout from "@/layout/Applayout";
 const routes = [
     {
-        path: '/',
+        path: '/products',
         component: Applayout,
         name: 'products',
         meta: {
@@ -10,7 +10,7 @@ const routes = [
         },
         children: [
             {
-                path: 'products/list',
+                path: 'list',
                 component: () => import('./List'),
                 name: 'productList',
                 meta: {
@@ -19,7 +19,7 @@ const routes = [
                 }
             },
             {
-                path: 'products/create',
+                path: 'create',
                 component:()=> import('./Created'),
                 name:'createProduct',
                 meta: {
@@ -27,7 +27,7 @@ const routes = [
                 }
             },
             {
-                path: 'products/detail/:id',
+                path: '/detail/:id',
                 component:()=> import('./Detail'),
                 name:'detailProduct',
                 meta: {
@@ -36,7 +36,7 @@ const routes = [
                 }
             },
             {
-                path: 'products/edit/:id',
+                path: '/edit/:id',
                 component:()=> import('./edit'),
                 name:'editProduct',
                 meta: {
