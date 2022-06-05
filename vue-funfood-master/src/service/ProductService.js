@@ -1,25 +1,25 @@
-import axios from "axios";
+import http from "../config";
 
-const URL_PRODUCTS = "http://localhost:8888/api/v1/products";
+const URL_PRODUCTS = "products";
 
 class ProductService {
 
     getAll(params){
-        return axios.get(URL_PRODUCTS + "/list", {
+        return http.get(URL_PRODUCTS + "/list", {
             params: params,
         });
     }
     save(body){
-        return axios.post(URL_PRODUCTS + "/create",body)
+        return http.post(URL_PRODUCTS + "/create",body)
     }
     detail(id){
-        return axios.get(URL_PRODUCTS + "/detail/"+ id)
+        return http.get(URL_PRODUCTS + "/detail/"+ id)
     }
     edit(id, body){
-        return axios.put(URL_PRODUCTS + "/update/"+id,body)
+        return http.put(URL_PRODUCTS + "/update/"+id,body)
     }
     delete(id){
-        return axios.delete(URL_PRODUCTS + "/delete/" + id)
+        return http.delete(URL_PRODUCTS + "/delete/" + id)
     }
 
 

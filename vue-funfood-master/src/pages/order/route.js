@@ -17,7 +17,6 @@ const routes = [
                     title: 'Orders List',
                 }
             },
-
             {
                 path: 'detail/:id',
                 component: () => import('./OrderDetail'),

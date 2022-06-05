@@ -1,8 +1,8 @@
-import axios from "axios";
-const URL_LOGIN ="http://localhost:8888/api/v1/accounts/login";
+import http from "../config";
+const URL_LOGIN ="accounts/login";
 class LoginService{
  authenticate(data){
-     return axios.post(URL_LOGIN,data)
+     return http.post(URL_LOGIN,data)
  }
 }
 export default new LoginService();

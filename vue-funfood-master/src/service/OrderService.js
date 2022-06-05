@@ -1,22 +1,22 @@
-import axios from "axios";
+import http from "../config";
 
-const URL_ORDER = "http://localhost:8888/api/v1/orders";
+const URL_ORDER = "orders";
 
 class OrderService {
 
     getAll(params){
-        return axios.get(URL_ORDER + "/list", {
+        return http.get(URL_ORDER + "/list", {
             params: params,
         });
     }
     getOrderItems(id){
-        return axios.get(URL_ORDER+"/"+ id)
+        return http.get(URL_ORDER+"/"+ id)
     }
     updateStatus(id,status){
-        return axios.put(URL_ORDER+"/status/update?id="+id+"&status="+status)
+        return http.put(URL_ORDER+"/status/update?id="+id+"&status="+status)
     }
     updateCheckout(id,isCheck){
-        return axios.put(URL_ORDER+"/checkOut/update?id="+id+"&isCheck="+isCheck)
+        return http.put(URL_ORDER+"/checkOut/update?id="+id+"&isCheck="+isCheck)
     }
     // delete(id){
     //     return axios.delete(URL_ORDER + "/delete/" + id)

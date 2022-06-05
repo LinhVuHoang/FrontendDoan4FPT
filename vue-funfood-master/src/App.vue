@@ -11,4 +11,9 @@ export default {
   name: 'App',
 }
 </script>
-
+<style>
+#app{
+  height: 100vh;
+  background: #0ba360;
+}
+</style>

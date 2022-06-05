@@ -8,6 +8,7 @@ const routes = [
             title: 'Products',
             icon: 'bars'
         },
+
         children: [
             {
                 path: 'list',
@@ -27,7 +28,7 @@ const routes = [
                 }
             },
             {
-                path: '/detail/:id',
+                path: 'detail/:id',
                 component:()=> import('./Detail'),
                 name:'detailProduct',
                 meta: {
@@ -36,7 +37,7 @@ const routes = [
                 }
             },
             {
-                path: '/edit/:id',
+                path: 'edit/:id',
                 component:()=> import('./edit'),
                 name:'editProduct',
                 meta: {
