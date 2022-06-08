@@ -61,11 +61,6 @@ export default {
     return {
       editorData: '',
       editorConfig: {
-        /*// The configuration of the editor.
-        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'insertTable', '|', 'imageUpload', 'mediaEmbed', '|', 'undo', 'redo' ],
-        table: {
-          toolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
-        },*/
         language: 'vi',
         defaultLanguage: 'vi'
       },

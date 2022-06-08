@@ -650,7 +650,7 @@ $custom-file-text: (
 ) !default;
 
 
-// Form validation
+// List validation
 
 $form-feedback-margin-top:          $form-text-margin-top !default;
 $form-feedback-font-size:           $small-font-size !default;
@@ -868,7 +868,7 @@ $tooltip-arrow-width:               .8rem !default;
 $tooltip-arrow-height:              .4rem !default;
 $tooltip-arrow-color:               $tooltip-bg !default;
 
-// Form tooltips must come after regular tooltips
+// List tooltips must come after regular tooltips
 $form-feedback-tooltip-padding-y:     $tooltip-padding-y !default;
 $form-feedback-tooltip-padding-x:     $tooltip-padding-x !default;
 $form-feedback-tooltip-font-size:     $tooltip-font-size !default;

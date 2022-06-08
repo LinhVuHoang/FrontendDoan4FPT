@@ -142,7 +142,7 @@ select.form-control {
 }
 
 
-// Form control sizing
+// List control sizing
 //
 // Build on `.form-control` with modifier classes to decrease or increase the
 // height and font-size of form controls.
@@ -177,7 +177,7 @@ textarea.form-control {
   height: auto;
 }
 
-// Form groups
+// List groups
 //
 // Designed to help with the organization and spacing of vertical forms. For
 // horizontal forms, use the predefined grid classes.
@@ -192,7 +192,7 @@ textarea.form-control {
 }
 
 
-// Form grid
+// List grid
 //
 // Special replacement for our grid system's `.row` for tighter form layouts.
 
@@ -252,7 +252,7 @@ textarea.form-control {
 }
 
 
-// Form validation
+// List validation
 //
 // Provide feedback to users when form field values are valid or invalid. Works
 // primarily for client-side validation via scoped `:invalid` and `:valid`

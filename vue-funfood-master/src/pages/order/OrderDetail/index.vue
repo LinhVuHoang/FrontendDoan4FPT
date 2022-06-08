@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="table-wrap">
-            <table class="table" :pagination="false" v-for="te in this.data" v-bind:key="te">
+            <table class="table" :pagination="false" >
               <thead class="thead-primary">
               <tr>
                 <th>ShipName</th>
@@ -21,7 +21,7 @@
                 <th>&nbsp;</th>
               </tr>
               </thead>
-              <tbody>
+              <tbody v-for="te in this.data" v-bind:key="te">
               <tr class="alert" role="alert" v-for="product in te.orderDetails" v-bind:key="product.productId">
                 <td><span>{{te.shipName}}</span></td>
                 <td><span>{{te.shipAddress}}</span></td>
@@ -53,60 +53,7 @@
 </template>
 <script>
 import OrderService from "../../../service/OrderService";
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'te.productId',
-    key: 'id',
-    scopedSlots: {customRender: 'id'}
-  },
-  {
-    title: 'Product Name',
-    dataIndex: 'orderDetails',
-    key: 'name',
-    scopedSlots: {customRender: 'name'}
-  },
-  {
-    title: 'Image',
-    dataIndex: 'thumbnail',
-    key: 'thumbnail',
-    ellipsis: true,
-    scopedSlots: {customRender: 'thumbnail'}
-  },
-  {
-    title: 'Price',
-    dataIndex: 'orderDetails',
-    key: 'price',
-    ellipsis: true,
-    scopedSlots: {customRender: 'price'}
-  },
-  {
-    title: 'Category',
-    dataIndex: 'category',
-    key: 'category',
-    scopedSlots: {customRender: 'category'},
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    ellipsis: true,
-  },
-  {
-    title:'Detail',
-    dataIndex:'detail',
-    key:'detail',
-    ellipsis: true,
-    scopedSlots: {customRender: 'detail'}
-  },
-  {
-    title:'orderDetails',
-    dataIndex: 'orderDetails',
-    key:'orderDetails',
-    scopedSlots: { customRender: 'orderDetails'
-    }
-  },
-];
+
 export default {
   data() {
     return {
@@ -116,7 +63,6 @@ export default {
         Id: undefined,
         quantity: 1
       },
-      columns,
       body:{
         Id:undefined,
         quantity: 1

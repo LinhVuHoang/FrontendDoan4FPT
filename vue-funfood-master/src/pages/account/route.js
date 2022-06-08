@@ -6,7 +6,7 @@ const routes = [
         component: Applayout,
         name: 'account',
         meta: {
-            title: 'Account',
+            title: 'User',
             icon: 'team'
         },
         children: [
@@ -19,11 +19,11 @@ const routes = [
                 }
             },*/
             {
-                path: 'create',
-                component: () => import('./Form'),
+                path: 'list',
+                component: () => import('./List'),
                 name: 'accountForm',
                 meta: {
-                    title: 'Form',
+                    title: 'List',
                 }
             },
            /* {

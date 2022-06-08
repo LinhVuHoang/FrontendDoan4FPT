@@ -1,187 +1,152 @@
 <template>
   <div>
-    <a-card>
-      <div>
-        <a-form @submit="handleSearch" class="product__search-form">
-          <a-form-item>
-            <a-input-search v-model="params.id" placeholder="Search by ID">
-              <a-icon type="search"/>
-            </a-input-search>
-          </a-form-item>
-            <a-form-item>
-            <a-input-search v-model="params.accountName"  placeholder="Search by name">
-              <a-icon type="search"/>
-            </a-input-search>
-            </a-form-item>
-            <a-form-item>
-            <a-input-search v-model="params.phoneAccount" placeholder="Search by phone">
-              <a-icon type="search"/>
-            </a-input-search>
-            </a-form-item>
-            <a-form-item>
-            <a-range-picker
-                            :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                            @change="selectDate"/>
-          </a-form-item>
-          <a-form-item>
-          <a-select placeholder="Search by Status" v-model="params.status">
-            <a-select-option  :value="1">
-              Đã xử lý
-            </a-select-option>
-            <a-select-option :value="0" >
-              Đang xử lý
-            </a-select-option>
-          </a-select>
-          </a-form-item>
-        </a-form>
-        <a-button  type="primary" html-type="submit" @click="handleSearch">
-          Search
-        </a-button>
-        <a-button type="primary" html-type="submit" @click="resetButton" style="margin-left: 20px">
-          Reset
-        </a-button>
-      </div>
-      <a-button v-if="this.params.status ==1" type="primary" html-type="submit" @click="updateallstatus(this.data,0)" style="margin-top: 20px">
-        SelectAll
-      </a-button>
-      <a-button v-else-if="this.params.status ==0" type="primary" html-type="submit" @click="updateallstatus(this.data,1)" style="margin-top: 20px">
-        SelectAll
-      </a-button>
-      <div>
-      <div id="price"  style="float: left" class="col-md-5">
-       <span style="align-content: center">Tổng tiền đơn hàng: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}<br></span>
-      <span style="align-content: center">Số tiền đã nhận: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span>
-      </div>
-      </div>
+      <section class="ftco-section">
+        <div class="container">
+          <div class="row">
+          <div>
+            <a-form @submit="handleSearch" class="product__search-form">
+              <a-form-item>
+                <a-input-search v-model="params.id" placeholder="Search by ID">
+                  <a-icon type="search"/>
+                </a-input-search>
+              </a-form-item>
+              <a-form-item>
+                <a-input-search v-model="params.accountName"  placeholder="Search by name">
+                  <a-icon type="search"/>
+                </a-input-search>
+              </a-form-item>
+              <a-form-item>
+                <a-input-search v-model="params.phoneAccount" placeholder="Search by phone">
+                  <a-icon type="search"/>
+                </a-input-search>
+              </a-form-item>
+              <a-form-item>
+                <a-range-picker
+                    :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                    @change="selectDate"/>
+              </a-form-item>
+              <a-form-item>
+                <a-select placeholder="Search by Status" v-model="params.status">
+                  <a-select-option  :value="1">
+                    Đã xử lý
+                  </a-select-option>
+                  <a-select-option :value="0" >
+                    Đang xử lý
+                  </a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-form>
+            <a-button  type="primary" html-type="submit" @click="handleSearch">
+              Search
+            </a-button>
+            <a-button type="primary" html-type="submit" @click="resetButton" style="margin-left: 20px">
+              Reset
+            </a-button>
+          </div>
+          <a-button v-if="this.params.status ==1" type="primary" html-type="submit" @click="updateallstatus(this.data,0)" style="margin-top: 20px">
+            SelectAll
+          </a-button>
+          <a-button v-else-if="this.params.status ==0" type="primary" html-type="submit" @click="updateallstatus(this.data,1)" style="margin-top: 20px">
+            SelectAll
+          </a-button>
+          <div>
+            <div id="price"  style="float: left" class="col-md-5">
+              <span style="align-content: center">Tổng tiền đơn hàng: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price)}}<br></span>
+              <span style="align-content: center">Số tiền đã nhận: {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price1)}}</span>
+            </div>
+          </div>
 
-      <a-table :columns="columns" :pagination="false" rowKey="id" :data-source="data">
-        <span slot="name" slot-scope="text">
-          {{text.name}}
-        </span>
-        <span slot="phone" slot-scope="text">
-          {{text.phone}}
-        </span>
-         <span slot="totalPrice" slot-scope="text">
-           {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)}}
-         </span>
-        <span slot="createdAt" slot-scope="text">{{text.split("-")[2]}}-{{text.split("-")[1]}}-{{text.split("-")[0]}}</span>
-        <span slot="OrderStatus" slot-scope="text,record">
-          <span v-if="text ==1" style="color: green">
-           Đã xử lý
-          </span>
-          <span v-else style="color: blue">
-             Đang xử lý
-          </span>
-          <span v-if="text ==1">
-          <input  type="checkbox"  checked="checked"  @change="updatestatus(record.id,0)"/>
-          <label style="text-align: center" ></label>
-            </span>
-          <span v-else>
-            <input type="checkbox"  @change="updatestatus(record.id,1)"/>
-          <label style="text-align: center" ></label>
-          </span>
-        </span>
-          <span slot="checkout" slot-scope="text,record">
-            <span v-if="text ==false" style="color: red">
-              Chưa thanh toán
-            </span>
-            <span v-else style="color: green">
-              Đã thanh toán
-            </span>
-            <span v-if="text ==true">
-          <input  type="checkbox"  checked="checked"  @change="updatecheckout(record.id,false)"/>
-          <label style="text-align: center" ></label>
-            </span>
-          <span v-else>
-            <input type="checkbox"  @change="updatecheckout(record.id,true)"/>
-          <label style="text-align: center" ></label>
-          </span>
-          </span>
-        <div slot="action" slot-scope="text,record">
-          <a class="button" :href="'detail/'+ record.id ">
-            <a-icon style="font-size: 25px" type="info-circle"/>
-          </a>
+            <div class="col-md-12">
+              <div class="table-wrap">
+                <table class="table table-striped">
+                  <thead>
+                  <tr >
+                    <th style="color: black">ID</th>
+                    <th style="color: black">Name</th>
+                    <th style="color: black">Phone</th>
+                    <th style="color: black">Total Price</th>
+                    <th style="color: black">Created At</th>
+                    <th style="color: black">Checkbox</th>
+                    <th style="color: black">CheckOut</th>
+                    <th style="color: black">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="order in data" v-bind:key="order.id">
+                    <td scope="row"><span>{{order.id}}</span></td>
+                    <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.name}}</span></span></td>
+                    <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.phone}}</span></span></td>
+                    <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalPrice)}}</td>
+                    <td>{{order.createdAt.split("-")[2]}}-{{order.createdAt.split("-")[1]}}-{{order.createdAt.split("-")[0]}}</td>
+                    <td><span v-if="order.status==1" style="color: green">
+                     Đã xử lý
+                       </span>
+                      <span v-else style="color: blue">
+                        Đang xử lý
+                      </span>
+                      <span v-if="order.status==1">
+                       <input  type="checkbox"  checked="checked"  @change="updatestatus(order.id,0)"/>
+                      <label style="text-align: center" ></label>
+                      </span>
+                      <span v-else>
+                      <input type="checkbox"  @change="updatestatus(order.id,1)"/>
+                      <label style="text-align: center" ></label>
+                      </span></td>
+                    <td><span v-if="order.checkout ==false" style="color: red">
+                    Chưa thanh toán
+                    </span>
+                      <span v-else style="color: green">
+                    Đã thanh toán
+                    </span>
+                      <span v-if="order.checkout ==true">
+           <input  type="checkbox"  checked="checked"  @change="updatecheckout(order.id,false)"/>
+           <label style="text-align: center" ></label>
+             </span>
+                      <span v-else>
+             <input type="checkbox"  @change="updatecheckout(order.id,true)"/>
+           <label style="text-align: center" ></label>
+           </span></td>
+                    <td><a class="button" :href="'detail/'+ order.id ">
+                      <a-icon style="font-size: 25px" type="info-circle"/>
+                    </a></td>
+
+                  </tr>
+                  </tbody>
+                </table>
+                <div style="padding-top: 15px">
+                  <a-pagination
+                      :default-current="this.params.pageSize"
+                      :total="this.totalRecords"
+                      show-size-changer
+                      @showSizeChange="onShowSizeChange"
+                      @change="onChange"
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div id="price1" class="col-md-6" style="float: right">
+                <span  style="align-content: center">Tổng tiền đơn hàng trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price2)}}<br></span>
+                <span  style="align-content: center">Số tiền đã nhận trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price3)}}</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </a-table>
-      <div style="padding-top: 15px">
-        <a-pagination
-            :default-current="this.params.pageSize"
-            :total="this.totalRecords"
-            show-size-changer
-            @showSizeChange="onShowSizeChange"
-            @change="onChange"
-        />
-      </div>
-  <div>
-    <div id="price1" class="col-md-6" style="float: right">
-      <span  style="align-content: center">Tổng tiền đơn hàng trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price2)}}<br></span>
-      <span  style="align-content: center">Số tiền đã nhận trang {{this.params.page}} : {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(this.price3)}}</span>
-    </div>
-  </div>
-    </a-card>
+      </section>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
 import OrderService from "../../../service/OrderService";
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'account',
-    ellipsis: true,
-    scopedSlots: {customRender: 'name'},
-  },
-  {
-    title: 'Phone',
-    dataIndex: 'account',
-    ellipsis: true,
-    scopedSlots: {customRender: 'phone'},
-  },
-  {
-    title: 'Total Price',
-    dataIndex: 'totalPrice',
-    key: 'totalPrice',
-    ellipsis: true,
-    scopedSlots: {customRender: 'totalPrice'}
-  },
-  {
-    title:'Created At',
-    dataIndex: 'createdAt',
-    key:'createdAt',
-    scopedSlots: {customRender: 'createdAt'}
-  },
-  {
-    title: 'OrderStatus',
-    dataIndex: 'status',
-    key: 'OrderStatus',
-    scopedSlots: {customRender: 'OrderStatus'}
-  },
-  {
-    title: 'CheckOut',
-    dataIndex: 'checkout',
-    key: 'checkout',
-    scopedSlots: {customRender: 'checkout'},
-  },
-  {
-    title: 'Action',
-    dataIndex: 'action',
-    key: 'action',
-    ellipsis: true,
-    scopedSlots: {customRender: 'action'},
-  },
-];
+
 export default {
   data(){
     return{
       data:[],
       data1:[],
       data2:[],
+      data3:[],
       form: {
         id: undefined,
         quantity:1
@@ -190,7 +155,6 @@ export default {
       price1:undefined,
       price2:undefined,
       price3:undefined,
-      columns,
       body:{
         id: undefined,
         quantity:1
@@ -220,6 +184,7 @@ export default {
   },
   created() {
     this.getOrder(),
+        this.getAccount()
         this.caculatorTotalPrice()
     this.caculatorCheckout()
     this.updatecheckout()
@@ -257,7 +222,15 @@ export default {
             }
           }
       )
+
     },
+    async getAccount(){
+    await OrderService.getAllAcount(this.params).then(rs=>{
+    this.data3 = rs.data.data;
+     console.log(this.data3)
+    this.totalRecords = rs.data.pagination.totalItems;
+  })
+},
     async caculatorTotalPrice(){
       let price =0;
       let check =true;

@@ -1,21 +1,6 @@
 <template>
   <div>
     <a-card>
-      <div>
-        <a-form @submit="handleSearch" class="category__search-form">
-          <a-form-item>
-            <a-input-search v-model="params.name" placeholder="Search by name">
-              <a-icon type="search"/>
-            </a-input-search>
-          </a-form-item>
-        </a-form>
-        <a-button type="primary" html-type="submit" @click="handleSearch">
-          Search
-        </a-button>
-        <a-button type="primary" html-type="submit" @click="resetButton" style="margin-left: 20px">
-          Reset
-        </a-button>
-      </div>
       <div style="padding-bottom: 20px; padding-top: 20px">
         <router-link to="/categories/create">
           <a-button type="primary" icon="plus">
@@ -39,7 +24,7 @@
           </a>
         </div>
       </a-table>
-      <div style="padding-top: 15px">
+<!--      <div style="padding-top: 15px">
         <a-pagination
             :default-current="this.params.pageSize"
             :total="this.totalRecords"
@@ -47,7 +32,7 @@
             @showSizeChange="onShowSizeChange"
             @change="onChange"
         />
-      </div>
+      </div>-->
     </a-card>
   </div>
 </template>

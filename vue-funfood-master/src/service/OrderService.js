@@ -21,6 +21,11 @@ class OrderService {
     // delete(id){
     //     return axios.delete(URL_ORDER + "/delete/" + id)
     // }
+    getAllAcount(params){
+        return http.get("http://localhost:8888/api/v1/accounts/list",{
+            params,
+        });
+    }
 }
 
 export default new OrderService();
