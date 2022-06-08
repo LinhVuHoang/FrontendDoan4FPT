@@ -60,7 +60,7 @@
               <div class="table-wrap">
                 <table class="table table-striped">
                   <thead>
-                  <tr >
+                  <tr style="background: red">
                     <th style="color: black">ID</th>
                     <th style="color: black">Name</th>
                     <th style="color: black">Phone</th>

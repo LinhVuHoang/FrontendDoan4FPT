@@ -5,15 +5,18 @@ import {categoriesRoute} from "../pages/category";
 import {ordersRouter} from "../pages/order";
 import {accountsRoute} from "../pages/account";
 import {loginsRoute} from "../pages/login";
+import {chartsRoute} from "../pages/chart";
 
 Vue.use(VueRouter)
 
 const routes = [
     ...accountsRoute,
+    ...chartsRoute,
     ...productsRoute,
     ...categoriesRoute,
     ...ordersRouter,
-    ...loginsRoute
+    ...loginsRoute,
+
 
 
 

@@ -10,31 +10,14 @@ const routes = [
             icon: 'team'
         },
         children: [
-           /* {
-                path: 'list',
-                component: () => import('./List'),
-                name: 'accountList',
-                meta: {
-                    title: 'List',
-                }
-            },*/
             {
                 path: 'list',
                 component: () => import('./List'),
-                name: 'accountForm',
+                name: 'List',
                 meta: {
                     title: 'List',
                 }
             },
-           /* {
-                path: 'edit/:id',
-                component: () => import('./Detail'),
-                name: 'accountEdit',
-                meta: {
-                    title: 'Detail',
-                    hidden: true
-                }
-            },*/
 
         ]
     }

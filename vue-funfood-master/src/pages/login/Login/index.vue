@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group" v-else>
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox"  class="custom-control-input"  id="customCheck" @change="saveaccount(1)">
+                        <input type="checkbox"  class="custom-control-input"   @change="saveaccount(1)">
                         <label class="custom-control-label" for="customCheck">Remember
                           Me</label>
                       </div>
@@ -112,7 +112,7 @@ export default {
         console.log(decodedJwtData.role)
         let role = decodedJwtData.role
         if(role =='ADMIN') {
-          this.$router.push({name: 'products'});
+          this.$router.push({name: 'DashBoard'});
         }else {
           this.$router.push({name:'Login'})
           errorrole.innerText = "Bạn không có quyền"
