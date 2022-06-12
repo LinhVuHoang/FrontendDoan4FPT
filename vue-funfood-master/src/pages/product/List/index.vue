@@ -67,7 +67,7 @@
            {{ text.name }}
         </span>
         <span slot="price" slot-scope="text">
-          {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)}}
+          {{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)}}/Per
         </span>
         <span slot="thumbnail" slot-scope="text">
              <img :src="text" style="width: 70%">

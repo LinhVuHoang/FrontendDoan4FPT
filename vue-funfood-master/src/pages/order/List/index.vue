@@ -72,8 +72,9 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="order in data" v-bind:key="order.id">
-                    <td scope="row"><span>{{order.id}}</span></td>
+
+                  <tr v-for="order in data" v-bind:key="order.id" >
+                    <td scope="row"><span >{{order.id}}</span></td>
                     <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.name}}</span></span></td>
                     <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.phone}}</span></span></td>
                     <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalPrice)}}</td>
