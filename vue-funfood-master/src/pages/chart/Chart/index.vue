@@ -1,6 +1,9 @@
 <template>
   <section id="dashboard">
     <mdb-card class="mb-4">
+      <div v-for="chart in this.datachart1" v-bind:key="chart">
+        {{chart}}
+      </div>
       <mdb-card-body class="d-sm-flex justify-content-between">
         <h4 class="mb-sm-0 pt-2">
           <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">Home Page</a><span>/</span><span>Dashboard</span>
@@ -23,33 +26,8 @@
             <mdb-card-header class="text-center"> Pie chart </mdb-card-header>
             <mdb-card-body>
               <div style="display: block">
-                <mdb-pie-chart :data="pieChartData" :options="pieChartOptions" :height="200"/>
+                <mdb-pie-chart :data="pieChartData" :options="pieChartOptions" :height="500"/>
               </div>
-            </mdb-card-body>
-          </mdb-card>
-          <mdb-card class="mb-4">
-            <mdb-card-body>
-              <mdb-list-group class="list-group-flush">
-                <mdb-list-group-item action waves>Sales
-                  <mdb-badge color="success-color" pill class="pull-right">22%
-                    <mdb-icon icon="arrow-up" class="ml-1"/>
-                  </mdb-badge>
-                </mdb-list-group-item>
-                <mdb-list-group-item action waves>Traffic
-                  <mdb-badge color="danger-color" pill class="pull-right">5%
-                    <mdb-icon icon="arrow-down" class="n ml-1"/>
-                  </mdb-badge>
-                </mdb-list-group-item>
-                <mdb-list-group-item action waves>Orders
-                  <mdb-badge color="primary-color" pill class="pull-right">14</mdb-badge>
-                </mdb-list-group-item>
-                <mdb-list-group-item action waves>Issues
-                  <mdb-badge color="primary-color" pill class="pull-right">123</mdb-badge>
-                </mdb-list-group-item>
-                <mdb-list-group-item action waves>Messages
-                  <mdb-badge color="primary-color" pill class="pull-right">8</mdb-badge>
-                </mdb-list-group-item>
-              </mdb-list-group>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
@@ -67,33 +45,15 @@
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
-<!--        <mdb-col md="12" lg="4" class="mb-4">
-          <mdb-card class="mb-4">
-            <mdb-card-header> Radar chart </mdb-card-header>
-            <mdb-card-body>
-              <div style="display: block">
-                <mdb-radar-chart :data="radarChartData" :options="radarChartOptions" :height="300"/>
-              </div>
-            </mdb-card-body>
-          </mdb-card>
-        </mdb-col>
-        <mdb-col md="12" lg="4" class="mb-4">
-          <mdb-card class="mb-4">
-            <mdb-card-header> Doughnut chart </mdb-card-header>
-            <mdb-card-body>
-              <div style="display: block">
-                <mdb-doughnut-chart :data="doughnutChartData" :options="doughnutChartOptions" :height="300"/>
-              </div>
-            </mdb-card-body>
-          </mdb-card>
-        </mdb-col>-->
       </mdb-row>
     </section>
   </section>
 </template>
 
 <script>
-import { mdbRow, mdbCol, mdbCard, mdbCardBody, mdbCardHeader, mdbIcon, mdbBarChart, mdbPieChart, mdbLineChart, /*mdbRadarChart, mdbDoughnutChart,*/ mdbListGroup, mdbListGroupItem, mdbBadge } from 'mdbvue'
+import {mdbBarChart, mdbCard, mdbCardBody, mdbCardHeader, mdbCol, mdbLineChart, mdbPieChart, mdbRow,} from 'mdbvue'
+import ProductService from "../../../service/ProductService";
+
 
 export default {
   name: 'Dashboard',
@@ -103,18 +63,26 @@ export default {
     mdbCard,
     mdbCardBody,
     mdbCardHeader,
-    mdbIcon,
+/*    mdbIcon,*/
     mdbBarChart,
     mdbPieChart,
     mdbLineChart,
  /*   mdbRadarChart,
     mdbDoughnutChart,*/
-    mdbListGroup,
+/*    mdbListGroup,
     mdbListGroupItem,
-    mdbBadge,
+    mdbBadge,*/
   },
   data () {
     return {
+      pieChartData: {},
+      datachart:[],
+      datachart1:[],
+      top1:undefined,
+      top2:undefined,
+      top3:undefined,
+      top4:undefined,
+      top5:undefined,
       showFrameModalTop: false,
       showFrameModalBottom: false,
       showSideModalTopRight: false,
@@ -172,16 +140,7 @@ export default {
           }]
         }
       },
-      pieChartData: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [
-          {
-            data: [300, 50, 100, 40, 120, 24, 52],
-            backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360', '#ac64ad'],
-            hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774', '#da92db']
-          }
-        ]
-      },
+
       pieChartOptions: {
         responsive: true,
         maintainAspectRatio: false
@@ -223,45 +182,55 @@ export default {
             }
           }]
         }
-      },
-      radarChartData: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [
-          {
-            label: '#1',
-            backgroundColor: 'rgba(245, 74, 85, 0.5)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-            label: '#2',
-            backgroundColor: 'rgba(90, 173, 246, 0.5)',
-            data: [12, 42, 121, 56, 24, 12, 2]
-          },
-          {
-            label: '#3',
-            backgroundColor: 'rgba(245, 192, 50, 0.5)',
-            data: [2, 123, 154, 76, 54, 23, 5]
-          }
-        ]
-      },
-      radarChartOptions: {
-        responsive: true,
-        maintainAspectRatio: false
-      },
-      doughnutChartData: {
-        labels: ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'],
-        datasets: [
-          {
-            data: [300, 50, 100, 40, 120],
-            backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-            hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774']
-          }
-        ]
-      },
-      doughnutChartOptions: {
-        responsive: true,
-        maintainAspectRatio: false
       }
+
+    }
+  },
+  // created() {
+  //   this.getChart()
+  // },
+  created() {
+    this.getChart()
+  },
+  methods:{
+    async getChart(){
+        await ProductService.getchart().then(
+            rs => {
+              try {
+                this.datachart = rs.data;
+                console.log(this.datachart)
+              }catch (e){
+                console.log(e);
+              }
+              let i;
+              let labelArr = [];
+              let dataArr = [];
+              for(i=0;i<5;i++){
+                labelArr.push(this.datachart[i].name)
+                dataArr.push(this.datachart[i].quantity)
+                // console.log(this.datachart[i])
+                // this.datachart1[i] = this.datachart[i]
+                //     this.pieChartData.labels[i] = this.datachart[i].name
+              }
+              this.createPieChart(labelArr,dataArr)
+              console.log(this.pieChartData.labels);
+            }
+        )
+    },
+    createPieChart(label,data){
+      this.pieChartData = {
+        labels: label,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360', '#ac64ad'],
+            hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774', '#da92db']
+          }
+        ]
+      };
+
+
+
     }
   }
 }

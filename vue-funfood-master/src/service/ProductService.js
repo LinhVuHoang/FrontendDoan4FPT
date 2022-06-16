@@ -21,6 +21,9 @@ class ProductService {
     delete(id){
         return http.delete(URL_PRODUCTS + "/delete/" + id)
     }
+    getchart(){
+        return http.get(URL_PRODUCTS+"/dataChart")
+    }
 
 
 }
