@@ -24,6 +24,9 @@ class ProductService {
     getchart(){
         return http.get(URL_PRODUCTS+"/dataChart")
     }
+    getlinechart(){
+        return http.get(URL_PRODUCTS+"/totalChart")
+    }
 
 
 }

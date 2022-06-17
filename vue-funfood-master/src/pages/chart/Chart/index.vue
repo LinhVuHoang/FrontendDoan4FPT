@@ -1,9 +1,6 @@
 <template>
   <section id="dashboard">
     <mdb-card class="mb-4">
-      <div v-for="chart in this.datachart1" v-bind:key="chart">
-        {{chart}}
-      </div>
       <mdb-card-body class="d-sm-flex justify-content-between">
         <h4 class="mb-sm-0 pt-2">
           <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">Home Page</a><span>/</span><span>Dashboard</span>
@@ -76,6 +73,8 @@ export default {
   data () {
     return {
       pieChartData: {},
+      lineChartData:{},
+      barChartData:{},
       datachart:[],
       datachart1:[],
       top1:undefined,
@@ -97,27 +96,6 @@ export default {
       showFluidModalLeft: false,
       showFluidModalTop: false,
       showFluidModalBottom: false,
-      barChartData: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [
-          {
-            label: '#1',
-            data: [12, 39, 3, 50, 2, 32, 84],
-            backgroundColor: 'rgba(245, 74, 85, 0.5)',
-            borderWidth: 1
-          }, {
-            label: '#2',
-            data: [56, 24, 5, 16, 45, 24, 8],
-            backgroundColor: 'rgba(90, 173, 246, 0.5)',
-            borderWidth: 1
-          }, {
-            label: '#3',
-            data: [12, 25, 54, 3, 15, 44, 3],
-            backgroundColor: 'rgba(245, 192, 50, 0.5)',
-            borderWidth: 1
-          }
-        ]
-      },
       barChartOptions: {
         responsive: true,
         maintainAspectRatio: false,
@@ -140,30 +118,9 @@ export default {
           }]
         }
       },
-
       pieChartOptions: {
         responsive: true,
         maintainAspectRatio: false
-      },
-      lineChartData: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [
-          {
-            label: '#1',
-            backgroundColor: 'rgba(245, 74, 85, 0.5)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          },
-          {
-            label: '#2',
-            backgroundColor: 'rgba(90, 173, 246, 0.5)',
-            data: [12, 42, 121, 56, 24, 12, 2]
-          },
-          {
-            label: '#3',
-            backgroundColor: 'rgba(245, 192, 50, 0.5)',
-            data: [2, 123, 154, 76, 54, 23, 5]
-          }
-        ]
       },
       lineChartOptions: {
         responsive: true,
@@ -192,32 +149,53 @@ export default {
   created() {
     this.getChart()
   },
-  methods:{
-    async getChart(){
-        await ProductService.getchart().then(
-            rs => {
-              try {
-                this.datachart = rs.data;
-                console.log(this.datachart)
-              }catch (e){
-                console.log(e);
-              }
-              let i;
-              let labelArr = [];
-              let dataArr = [];
-              for(i=0;i<5;i++){
-                labelArr.push(this.datachart[i].name)
-                dataArr.push(this.datachart[i].quantity)
-                // console.log(this.datachart[i])
-                // this.datachart1[i] = this.datachart[i]
-                //     this.pieChartData.labels[i] = this.datachart[i].name
-              }
-              this.createPieChart(labelArr,dataArr)
-              console.log(this.pieChartData.labels);
+  methods: {
+    async getChart() {
+      await ProductService.getchart().then(
+          rs => {
+            try {
+              this.datachart = rs.data;
+              console.log(this.datachart)
+            } catch (e) {
+              console.log(e);
             }
-        )
+            let i;
+            let labelArr = [];
+            let dataArr = [];
+            for (i = 0; i < 5; i++) {
+              labelArr.push(this.datachart[i].name)
+              dataArr.push(this.datachart[i].quantity)
+              // console.log(this.datachart[i])
+              // this.datachart1[i] = this.datachart[i]
+              //     this.pieChartData.labels[i] = this.datachart[i].name
+            }
+            labelArr.push("Còn lại")
+            dataArr.push(1)
+            this.createPieChart(labelArr, dataArr)
+            console.log(this.pieChartData.labels);
+          }
+      )
+      await ProductService.getlinechart().then(
+          rs => {
+            try {
+              this.datachart1 = rs.data;
+              console.log(this.datachart1)
+            } catch (e) {
+              console.log(e);
+            }
+            let i;
+            let labelArr = [];
+            let dataArr1 = [];
+            for (i = 0; i < this.datachart1.length; i++) {
+              labelArr.push(this.datachart1[i].month)
+              dataArr1.push(this.datachart1[i].total_price)
+            }
+            this.createLineChart(dataArr1)
+            this.createBarchar(dataArr1)
+          }
+      )
     },
-    createPieChart(label,data){
+    createPieChart(label, data) {
       this.pieChartData = {
         labels: label,
         datasets: [
@@ -228,9 +206,51 @@ export default {
           }
         ]
       };
-
-
-
+    },
+    createLineChart(data) {
+      this.lineChartData = {
+        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+        datasets: [
+          {
+            label: '2022',
+            backgroundColor: 'rgba(245, 74, 85, 0.5)',
+            data: data
+          },
+          {
+            label: '2021',
+            backgroundColor: 'rgba(90, 173, 246, 0.5)',
+            data: [120000, 4200000, 1210000, 5600000, 2400000, 120000, 20000, 300000, 400000, 500000, 100000, 200000]
+          },
+          {
+            label: '2020',
+            backgroundColor: 'rgba(245, 192, 50, 0.5)',
+            data: [200000, 1230000, 154000, 7600000, 540000, 230000, 500000, 300000, 400000, 500000, 60000, 400000]
+          }
+        ]
+      }
+    },
+    createBarchar( data) {
+      this.barChartData = {
+        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+        datasets: [
+          {
+            label: '2022',
+            data: data,
+            backgroundColor: 'rgba(245, 74, 85, 0.5)',
+            borderWidth: 1
+          }, {
+            label: '2021',
+            data: [560000, 240000, 500000, 160000, 450000, 240000, 800000,300000, 400000, 500000, 100000, 200000],
+            backgroundColor: 'rgba(90, 173, 246, 0.5)',
+            borderWidth: 1
+          }, {
+            label: '2020',
+            data: [120000, 250000, 540000, 300000, 150000, 440000, 3000000,300000,400000,600000,900000,1000000],
+            backgroundColor: 'rgba(245, 192, 50, 0.5)',
+            borderWidth: 1
+          }
+        ]
+      }
     }
   }
 }

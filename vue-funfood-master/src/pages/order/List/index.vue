@@ -53,8 +53,6 @@
               <span style="align-content: center">Số tiền đã nhận: {{new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(this.price1)}}</span>
             </div>
           </div>
-
-<<<<<<< HEAD
           <div class="col-md-12">
             <div class="table-wrap">
               <table class="table table-striped">
@@ -65,7 +63,7 @@
                   <th style="color: black">Phone</th>
                   <th style="color: black">Total Price</th>
                   <th style="color: black">Created At</th>
-                  <th style="color: black">Status<input type="checkbox" id="checkAll" @click="checkAll(1)"></th>
+                  <th style="color: black">Status<input type="checkbox" id="checkAll" @click="checkAll(1)"/></th>
                   <th style="color: black">CheckOut</th>
                   <th style="color: black">Action</th>
                 </tr>
@@ -84,32 +82,6 @@
                   </td>
                   <td v-if="order.shoppingCart ==false">
                       <span v-if="order.status==1" style="color: green">
-=======
-            <div class="col-md-12">
-              <div class="table-wrap">
-                <table class="table table-striped">
-                  <thead>
-                  <tr style="background: red">
-                    <th style="color: black">ID</th>
-                    <th style="color: black">Name</th>
-                    <th style="color: black">Phone</th>
-                    <th style="color: black">Total Price</th>
-                    <th style="color: black">Created At</th>
-                    <th style="color: black">Checkbox</th>
-                    <th style="color: black">CheckOut</th>
-                    <th style="color: black">Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-
-                  <tr v-for="order in data" v-bind:key="order.id" >
-                    <td scope="row"><span >{{order.id}}</span></td>
-                    <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.name}}</span></span></td>
-                    <td><span v-for="account in data3" v-bind:key="account"><span v-if="order.accountId == account.id">{{account.phone}}</span></span></td>
-                    <td>{{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.totalPrice)}}</td>
-                    <td>{{order.createdAt.split("-")[2]}}-{{order.createdAt.split("-")[1]}}-{{order.createdAt.split("-")[0]}}</td>
-                    <td><span v-if="order.status==1" style="color: green">
->>>>>>> a83fd82d00ed1556ebaedab2023668c0a8b37d81
                      Đã xử lý
                       </span>
                     <span v-else style="color: blue">
