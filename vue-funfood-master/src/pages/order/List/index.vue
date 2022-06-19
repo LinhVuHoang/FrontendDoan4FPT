@@ -92,7 +92,7 @@
                       <label style="text-align: center"></label>
                       </span>
                     <span v-else>
-                      <input type="checkbox" class="subCheckBox"   @change="updatestatus(order.id,1)"/>
+                      <input type="checkbox" id="uncheckbox" class="subCheckBox"   @change="updatestatus(order.id,1)"/>
                       <label style="text-align: center"></label>
                       </span></td>
                   <td v-if="order.shoppingCart ==false"><span v-if="order.checkout ==false" style="color: red">
@@ -317,13 +317,32 @@ export default {
       this.getOrder();
     },
     updatestatus(id, status) {
-      OrderService.updateStatus(id, status).then(
-          rs => {
-            console.log(rs.data)
-            this.getOrder();
-            this.caculatorTotalPrice();
-          })
+      if(status ==1){
+        this.$confirm({
+          title: 'Bạn có xác nhận đơn hàng này không',
+          onOk: () => {
+            OrderService.updateStatus(id, status).then(
+                rs => {
+                  console.log(rs.data)
+                  this.getOrder();
+                  this.caculatorTotalPrice();
+                })
+          },
+          onCancel() {
+            console.log("Cancel")
+            document.getElementById("uncheckbox").checked = false;
+          }
+        })
+        }else {
+        OrderService.updateStatus(id, 0).then(
+            rs => {
+              console.log(rs.data)
+              this.getOrder();
+              this.caculatorTotalPrice();
 
+            })
+
+      }
     },
     /*async updateallstatus(status){
        let check =true;

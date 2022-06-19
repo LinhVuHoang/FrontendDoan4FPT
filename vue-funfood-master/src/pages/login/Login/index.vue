@@ -115,7 +115,7 @@ export default {
           this.$router.push({name: 'DashBoard'});
         }else {
           this.$router.push({name:'Login'})
-          errorrole.innerText = "Bạn không có quyền"
+          errorrole.innerText = "Sai mật khẩu hoặc tài khoản"
         }
 
       }else{
