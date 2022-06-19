@@ -8,7 +8,6 @@ const routes = [
             title: 'Products',
             icon: 'bars'
         },
-
         children: [
             {
                 path: 'list',
