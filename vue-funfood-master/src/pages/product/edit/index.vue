@@ -206,7 +206,7 @@ export default {
     handleSubmit(e){
       e.preventDefault()
       if(!this.validate()){
-        return "lỗi validate kìa thằng đần"
+        return "lỗi validate"
       }
       ProductService.edit(this.currentData.id,this.currentData).then(response=> {
         console.log(response.data);
