@@ -3,7 +3,7 @@
   <a-layout  id="components-layout-demo-side" style="min-height: 100vh;background: black" >
     <a-layout-sider v-model="collapsed" collapsible style="background: black">
       <div class="logo" />
-      <a-menu style="background: #bd2130" :default-selected-keys="['1']" mode="inline">
+      <a-menu style="background: #ffffff" :default-selected-keys="['1']" mode="inline">
         <template v-for="menu in $router.options.routes">
           <a-menu-item :key="menu.name" v-if="!menu.children">
             <router-link :to="{name: menu.name}" >
@@ -11,9 +11,9 @@
               <span>{{ menu.meta.title }}</span>
             </router-link>
           </a-menu-item>
-          <a-sub-menu style="background: #bd2130;" :key="menu.name" v-else >
+          <a-sub-menu style="background: #ffffff;" :key="menu.name" v-else >
             <span slot="title"><a-icon :type="menu.meta.icon" /><span>{{ menu.meta.title }}</span></span>
-            <template style="background: #bd2130;" v-for="child in menu.children">
+            <template style="background: #ffffff;" v-for="child in menu.children">
               <a-menu-item :key="child.name" v-if="!child.meta.hidden">
                 <router-link :to="{name: child.name}"  style="text-decoration: none" >
                   {{ child.meta.title }}
